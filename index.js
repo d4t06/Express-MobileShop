@@ -17,6 +17,7 @@ app.use(cors(corsOptions));
 
 //built-in middleware for json
 app.use(express.json());
+
 // built-in middleware
 app.use(express.urlencoded({ extended: false }));
 

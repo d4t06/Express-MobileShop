@@ -16,35 +16,35 @@ class AuthController {
 
 
          try {
+            // generate hash password
             const salt = await bcrypt.genSalt(10)
-            const hashPassword = bcrypt.hash(password)
+            const hashPassword = await bcrypt.hash(password, salt)
 
-            const newUser = new User({username, password: hashPassword});
+            const newUser = new User({"username": username, "password": hashPassword});
             newUser.save()
             
-            res.sendStatus(201).json("new user created !")
+            res.status(201).json("new user created !")
          } catch (err) {
-            res.sendStatus(500).json({"message": err.message})
+            res.status(500).json({"message": err.message})
          }
    }
 
-   async handleLogin (req, res) {
-      const username = req.body.username;
-      const password = req.body.password;
-
+   async handleLogin(req, res) {
+      const {username, password} = req.body
+      
       // check payload
-      if(!username, !password) return rs.sendStatus(401) // unauthorized
+      if(!username, !password) return res.sendStatus(401) // unauthorized
 
       try {
          // check username is in db
-         const founderUser = User.findOne({where:{username: username}})
-         if (!founderUser) res.sendStatus(401);
+         const founderUser = await User.findOne({"username": username})
+         if (!founderUser)  return res.sendStatus(401);
 
          // check password
          const isCorrectPassWord = await bcrypt.compare(password, founderUser.password)
          if (!isCorrectPassWord) return res.sendStatus(401);
 
-         const {username, role_code} = founderUser
+         const {role_code} = founderUser
 
          //generate token 
          const token = jwt.sign({username}, "nguyenhuudat", {expiresIn: "30s"})
@@ -61,7 +61,7 @@ class AuthController {
          res.json({role: role_code, token: `bearer ${token}`})
 
       } catch (err) {
-         res.sendStatus(500).json({"message": err.message})
+         res.status(500).json({"message": err.message})
       }
    }
 }

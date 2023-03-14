@@ -1,12 +1,27 @@
-GET http://localhost:3000/users
+GET http://localhost:3000/users 
+Authorization:bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiaWF0IjoxNjc4Nzg0NDgzLCJleHAiOjE2Nzg3ODQ1MTN9.C4ZniajY8YB09tdTRHFGWR3tcHhfOP1w9AnASUuvAvI
 
 
 ###
-
-POST http://localhost:3000/login
+POST http://localhost:3000/api/auth/login
 content-type: application/json
 
 {
-    "username": "datnh",
-    "password": "dat123"
+    "username": "admin",
+    "password": "admin"
+}
+
+###
+POST http://localhost:3000/api/auth/logout
+
+###
+POST http://localhost:3000/api/auth/refresh
+
+###
+POST http://localhost:3000/api/auth/register
+content-type: application/json
+
+{
+    "username": "uerr",
+    "password": "uerr"
 }

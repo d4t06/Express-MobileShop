@@ -1,18 +1,19 @@
-const User = reqire("../models/User");
-const jwt = reqire("jsonwebtoken")
+const User = require("../models/User");
+const jwt = require("jsonwebtoken")
 
 const handleRefreshToken = async (req, res) => {
-	const cookie = req.cookie
-	if (!cookie.jwt) return res.sendStatus(401) // unauthorized
+	const cookies = req.cookies
 
-	const refreshToken = cookie.jwt
+	if (!cookies.jwt) return res.sendStatus(401) // unauthorized
+
+	const refreshToken = cookies.jwt
 
 	// check is user in database
-	const founderUser = User.findOne({where: {refresh_token: refreshToken})
+	const founderUser = await User.findOne({refresh_token: refreshToken})
 	if (!founderUser) return res.sendStatus(403) //forbidden
 
 	// check prev token
-	const userInfo = jwt.verify(refreshToken, "nguyenhuudat")	
+	const userInfo =  jwt.verify(refreshToken, "nguyenhuudat")	
 	if (!userInfo || userInfo.username !== founderUser.username) return res.sendStatus(403) //forbidden
 
 	// generate new token
@@ -26,5 +27,7 @@ const handleRefreshToken = async (req, res) => {
      }
   );
 
-	res.json({accessToken})
+	res.json({token: `bearer ${accessToken}`})
 }
+
+module.exports =  handleRefreshToken

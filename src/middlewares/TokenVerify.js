@@ -1,21 +1,18 @@
 const jwt = require("jsonwebtoken")
 
-const TokenVerify = (req, res) => {
-    if (!req.headers.authorization) return res.sendStatus(401) //Unauthorized
+const TokenVerify = (req, res, next) => {
+    if (!req.headers.authorization) return res.sendStatus(403) //forbidden
 
-    const token = req.headers.authorization.split("")[1];
+    const token = req.headers.authorization.split(" ")[1];
 
-    const cookie = req.cookie
-    if (!cookie.jwt) return res.sendStatus(401)
-    const jwt = cookie.jwt
-    
     try {
-        const userInfo = jwt.verify(token, "nguyenhuudat")
-
-        req.userInfo = userInfo
-        next()
+        jwt.verify(token, "nguyenhuudat", (err, decode) => {
+            if (err) res.sendStatus(401)
+            req.userInfo = decode.username
+            next()
+        })
     } catch (error) {
-        res.sendStatus(403) // forbidden
+        res.status(401).json({message: error.message}) // Unauthorized
     }
 }
 
