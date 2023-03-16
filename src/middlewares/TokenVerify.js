@@ -1,18 +1,19 @@
 const jwt = require("jsonwebtoken")
 
 const TokenVerify = (req, res, next) => {
-    if (!req.headers.authorization) return res.sendStatus(403) //forbidden
+    console.log("token middleware pass");
+    if (!req.headers.authorization) return res.sendStatus(403); //forbidden
 
     const token = req.headers.authorization.split(" ")[1];
 
     try {
         jwt.verify(token, "nguyenhuudat", (err, decode) => {
-            if (err) res.sendStatus(401)
-            req.userInfo = decode.username
-            next()
+            if (err) return res.sendStatus(403);
+            req.userInfo = decode.username;
+            next();
         })
     } catch (error) {
-        res.status(401).json({message: error.message}) // Unauthorized
+        res.status(401).json({message: error.message}); // Unauthorized
     }
 }
 

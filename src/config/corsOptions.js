@@ -1,6 +1,7 @@
 const whiteList = ["http://localhost:3001"];
 
-const corsOptions = {
+module.exports = corsOptions = {
+   Credential: true,
    origin: (origin, callback) => {
       if (whiteList.indexOf(origin) !== -1 || !origin) {
          callback(null, true);
@@ -11,4 +12,4 @@ const corsOptions = {
    optionsSuccessStatus: 200,
 };
 
-module.exports = { corsOptions };
+// module.exports = { corsOptions };

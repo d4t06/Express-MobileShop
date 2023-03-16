@@ -13,7 +13,7 @@ require("./src/config/ConnectDB");
 app.use(cookieParser());
 
 // allow cors
-app.use(cors(corsOptions));
+app.use(cors({credentials: true, origin: "http://localhost:3001"}));
 
 //built-in middleware for json
 app.use(express.json());
