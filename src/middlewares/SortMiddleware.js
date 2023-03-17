@@ -1,17 +1,24 @@
 module.exports = function SortMiddleware ( req, res, next) {
-    res.locals._sort = {
+    res.locals.sort = {
         enable: false,
+        column: '',
         type : 'desc',
     };
 
-    if (req.query.hasOwnProperty("_sort")) {
+    if (req.query.column) {
+        console.log('sort middleware pass');
+
         const isValidType = ['asc', 'desc'].includes(req.query.type)
-        Object.assign(res.locals._sort, {
+        const isValidColumn = ["cur_price", "intallment"].includes(req.query.column);
+
+        Object.assign(res.locals.sort, {
             enable: true,
             type: isValidType ? req.query.type : 'desc',
-            column: req.query.column
+            column: isValidColumn ? req.query.column : 'name'
         })
-    };
+    } else {
+        // không cần else ở đay bì, mỗi một request sẽ có res.locals.sort mới
+    }
     
     next()
 }

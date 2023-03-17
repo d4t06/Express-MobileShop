@@ -1,8 +1,8 @@
 const Product = require("../models/Product");
-const util = require("../util/mongoose");
+const Detail = require("../models/Detail")
 
 class ProductsController {
-    getProducts(req, res, next) {
+    getProducts(req, res) {
       const { price, ...query } = req.query;
 
       // console.log(res.locals.sort)
@@ -24,9 +24,9 @@ class ProductsController {
             res.json({ count, rows });
             return;
          })
-         .catch((err) => res.json("loi server"));
+         .catch((err) => res.status(500).json(err));
    }
-   async getOne(req, res, next) {
+   async getOne(req, res) {
       // service
       const { key } = req.params;
       console.log(" key = ", key);
@@ -60,7 +60,7 @@ class ProductsController {
       });  
    }
 
-   search(req, res, next) {
+   search(req, res) {
       let { q, page } = req.query;
       if (!page) page = 1;
       console.log("search", q, page);

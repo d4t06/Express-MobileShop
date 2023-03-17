@@ -11,7 +11,7 @@ const SortMiddleWare = require("../middlewares/SortMiddleware")
 
 const route = function (app) {
 
-   app.use("/api/products", PaginationMiddleware, SortMiddleWare, productRouter)
+   app.use("/api/products", productRouter)
 
    app.use("/api/auth", authRouter)
 
