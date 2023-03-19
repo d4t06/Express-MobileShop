@@ -1,7 +1,6 @@
 module.exports = function paginationMiddleware (req, res, next) {
     res.locals.page = {
         curPage: 1,
-        pageSize: 10,
     };
 
     if (req.query.hasOwnProperty("page")) {

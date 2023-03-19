@@ -6,8 +6,6 @@ const adminRouter = require('./admin')
 
 //middleWare
 const TokenVerify = require("../middlewares/TokenVerify")
-const PaginationMiddleware = require("../middlewares/PaginationMiddleware")
-const SortMiddleWare = require("../middlewares/SortMiddleware")
 
 const route = function (app) {
 
@@ -20,7 +18,7 @@ const route = function (app) {
    app.use("/api/admin", adminRouter)
 
    app.use("/",(req, res) => {
-      res.sendStatus(404) //not found
+      res.json("404") //not found
    });
 
 };

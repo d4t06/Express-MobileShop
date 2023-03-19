@@ -9,7 +9,7 @@ router.post("/login", AuthController.handleLogin);
 
 router.post("/register", AuthController.handleRegister);
 
-router.post("/logout", LogoutController);
+router.get("/logout", LogoutController);
 
 router.get("/refresh", RefreshTokenController)
 

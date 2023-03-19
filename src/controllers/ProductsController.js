@@ -15,7 +15,7 @@ class ProductsController {
       // service
       Promise.all([
          Product.find({ ...query, cur_price: { $gte: gThan * 1000000, $lte: lThan * 1000000 } }).count(),
-         Product.find({ ...query, cur_price: { $gte: gThan, $lte: lThan * 1000000 } })
+         Product.find({ ...query, cur_price: { $gte: gThan * 1000000, $lte: lThan * 1000000 } })
             .handlePage(res)
             .handleSort(res),
       ])
@@ -31,17 +31,9 @@ class ProductsController {
       const { key } = req.params;
       console.log(" key = ", key);
 
-      // Promise.all([Product.findOne({href: key}), Detail.findOne({key: key})])
-      // .then(([product, detail]) => {
-      //    res.json([product])
-      // })
-      // return;
       let newProduct = [];
 
       const product = await Product.find({href: key})
-
-      // res.json(product)
-      // return
 
       product.forEach(async (product) => {
          try {            
@@ -68,7 +60,7 @@ class ProductsController {
       Promise.all([
          Product.find({ name: new RegExp(q, "i") }).count(),
          Product.find({ name: new RegExp(q, "i") })
-            .limit(page * 8)
+            .handlePage(res)
             .handleSort(res),
       ])
 

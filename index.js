@@ -4,7 +4,8 @@ const cors = require("cors");
 const route = require("./src/routes");
 const port = process.env.PORT || 3000;
 const cookieParser = require("cookie-parser");
-const corsOptions = require("./src/config/corsOptions");
+require('dotenv').config()
+// const corsOptions = require("./src/config/corsOptions");
 
 // connect database
 require("./src/config/ConnectDB");

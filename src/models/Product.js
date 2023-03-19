@@ -48,7 +48,8 @@ ProductSchema.query.handleSort = function (res) {
 }
 
 ProductSchema.query.handlePage = function (res) {
-  const pageSize = (res.locals.page?.curPage || 1) * 6
+
+  const pageSize = (res.locals.page?.curPage || 1) * process.env.PAGE_SIZE
   const skipCount = 0  // (res.locals._page.curPage - 1) * pageSize
  
   //thực hiện phân dữ liệu
