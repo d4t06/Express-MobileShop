@@ -17,3 +17,6 @@ Delete -> DELETE
 - sign username và role_code vào token
 - Chỉ trả về token khi đăng nhập và refresh token
 - Fix can't set header... là do không return trong try catch
+
+### update thứ 3 28/3/2023
+- dùng mongoose virtual and poppulate để lấy dữ liệu giữa hai bảng

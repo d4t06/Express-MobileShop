@@ -25,3 +25,15 @@ content-type: application/json
     "username": "uerr",
     "password": "uerr"
 }
+
+###
+GET http://localhost:3000/api/products/dtdd/iphone-14-pro-max
+
+
+###
+GET https://maps.googleapis.com/maps/api/place/autocomplete/json
+  ?input=amoeba
+  &location=37.76999%2C-122.44696
+  &radius=500
+  &types=establishment
+  &key=AIzaSyBdJjiNO2lRXAWQOyLRu1LP9CwWJZ1GCjQ

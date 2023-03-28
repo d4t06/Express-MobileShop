@@ -6,9 +6,8 @@ mongoose.set('strictQuery', true);
 const Schema = mongoose.Schema;
 
 const ProductSchema = new Schema({
-  _id: {type: Number},
-  href: { type: String },
-  name: { type: String, default: 'product_name' },
+  href: { type: String},
+  name: { type: String},
   brand: {type : String},
   category: {type : String},
   image: { type: String },
@@ -26,6 +25,15 @@ const ProductSchema = new Schema({
     timestamps: true,
   }
 );
+
+ProductSchema.set('toObject', {virtuals: true});
+ProductSchema.set('toJSON', {virtuals: true});
+
+ProductSchema.virtual('details', {
+  ref:"Detail",
+  localField: 'href', // The field in productSchema
+  foreignField: 'key', // The field on detailSchema. This can be whatever you want.
+})
 
 //custom query helper
   // không được viết trùng tên với tên phương thức của query 

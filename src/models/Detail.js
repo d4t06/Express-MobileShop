@@ -10,6 +10,7 @@ const DetailSchema = new Schema({
   colors: {type : String},
   memories: {type : String},
   params: {type : String},
-});
+}
+);
 
 module.exports = mongoose.model('Detail', DetailSchema);

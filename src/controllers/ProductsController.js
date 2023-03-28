@@ -31,25 +31,26 @@ class ProductsController {
       const { key } = req.params;
       console.log(" key = ", key);
 
-      let newProduct = [];
+      // let newProduct = [];
 
-      const product = await Product.find({href: key})
+      const product = await Product.find({href: key}).populate('details')
 
-      product.forEach(async (product) => {
-         try {            
-            const detail = await Detail.findOne({key: key})
+      // product.forEach(async (product) => {
+      //    try {            
+      //       const detail = await Detail.findOne({key: key})
 
-            product.set('data', detail.toJSON(), {strict: false})
-            newProduct.push(product)
+      //       product.set('data', detail.toJSON(), {strict: false})
+      //       newProduct.push(product)
 
-            res.json(newProduct)
-         } catch (error) {
+      //       res.json(newProduct)
+      //    } catch (error) {
 
-            res.status(500).json("loi server")
-            console.log(error);
-         }
+      //       res.status(500).json("loi server")
+      //       console.log(error);
+      //    }
 
-      });  
+      // });
+      res.json(product)
    }
 
    search(req, res) {
