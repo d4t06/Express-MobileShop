@@ -14,8 +14,8 @@ class ProductsController {
 
       // service
       Promise.all([
-         Product.find({ ...query, cur_price: { $gte: gThan * 1000000, $lte: lThan * 1000000 } }).count(),
-         Product.find({ ...query, cur_price: { $gte: gThan * 1000000, $lte: lThan * 1000000 } })
+         Product.find({ ...query, cur_price: { $gte: +gThan * 1000000, $lte: +lThan * 1000000 } }).count(),
+         Product.find({ ...query, cur_price: { $gte: +gThan * 1000000, $lte: +lThan * 1000000 } })
             .handlePage(res)
             .handleSort(res),
       ])
@@ -33,7 +33,7 @@ class ProductsController {
 
       // let newProduct = [];
 
-      const product = await Product.find({href: key}).populate('details')
+      const product = await Product.find({href: key}).populate('data')
 
       // product.forEach(async (product) => {
       //    try {            
