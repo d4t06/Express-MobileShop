@@ -20,3 +20,6 @@ Delete -> DELETE
 
 ### update thứ 3 28/3/2023
 - dùng mongoose virtual and poppulate để lấy dữ liệu giữa hai bảng
+
+### update thứ 4 19/4/2023
+- Trả về thêm page_size

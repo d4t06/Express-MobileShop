@@ -21,7 +21,7 @@ class ProductsController {
       ])
 
          .then(([count, rows]) => {
-            res.json({ count, rows });
+            res.json({ page_size: +process.env.PAGE_SIZE || 6, count, rows });
             return;
          })
          .catch((err) => res.status(500).json(err));
