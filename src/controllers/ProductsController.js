@@ -66,7 +66,7 @@ class ProductsController {
       ])
 
          .then(([count, rows]) => {
-            res.json(rows.length ? { count, rows } : null);
+            res.json(rows.length ? { page_size: 6, count, rows } : null);
          })
          .catch((err) => {
             res.status(500).json("lối serve");
