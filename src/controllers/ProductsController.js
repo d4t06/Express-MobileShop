@@ -1,23 +1,34 @@
-const Product = require("../models/Product");
-const Detail = require("../models/Detail")
+const Product = require('../models/Product');
+const Detail = require('../models/Detail');
 
 class ProductsController {
-    getProducts(req, res) {
+   getProducts(req, res) {
+      const { category } = req.params;
       const { price, ...query } = req.query;
 
+      console.log(category);
+
       // console.log(res.locals.sort)
-      
+
       const [gThan, lThan] = price || [0, 50];
-      
-      console.log("controller pass ", {...query, price} );
+
+      console.log('controller pass ', { ...query, price });
       // console.log(gThan, lThan);
 
       // service
       Promise.all([
-         Product.find({ ...query, cur_price: { $gte: +gThan * 1000000, $lte: +lThan * 1000000 } }).count(),
-         Product.find({ ...query, cur_price: { $gte: +gThan * 1000000, $lte: +lThan * 1000000 } })
-            .handlePage(res)
-            .handleSort(res),
+         Product.find({
+            ...query,
+            category: category,
+            cur_price: { $gte: +gThan * 1000000, $lte: +lThan * 1000000 },
+         }).count(),
+         Product.find({
+            ...query,
+            category: category,
+            cur_price: { $gte: +gThan * 1000000, $lte: +lThan * 1000000 },
+         })
+            .handleSort(res)
+            .handlePage(res),
       ])
 
          .then(([count, rows]) => {
@@ -27,49 +38,36 @@ class ProductsController {
          .catch((err) => res.status(500).json(err));
    }
    async getOne(req, res) {
-      // service
       const { key } = req.params;
-      console.log(" key = ", key);
+      const product = await Product.find({ href: key }).populate('data');
 
-      // let newProduct = [];
+      res.json(product);
+   }
 
-      const product = await Product.find({href: key}).populate('data')
+   async getSuggest(req, res) {
+      const { category } = req.query;
+      const products = await Product.find({ category: category }).limit(4);
 
-      // product.forEach(async (product) => {
-      //    try {            
-      //       const detail = await Detail.findOne({key: key})
-
-      //       product.set('data', detail.toJSON(), {strict: false})
-      //       newProduct.push(product)
-
-      //       res.json(newProduct)
-      //    } catch (error) {
-
-      //       res.status(500).json("loi server")
-      //       console.log(error);
-      //    }
-
-      // });
-      res.json(product)
+      res.json(products);
    }
 
    search(req, res) {
       let { q, page } = req.query;
       if (!page) page = 1;
-      console.log("search", q, page);
+      console.log('search', q, page);
 
       Promise.all([
-         Product.find({ name: new RegExp(q, "i") }).count(),
-         Product.find({ name: new RegExp(q, "i") })
-            .handlePage(res)
-            .handleSort(res),
+         Product.find({ name: new RegExp(q, 'i') }).count(),
+         Product.find({ name: new RegExp(q, 'i') })
+            .handleSort(res)
+            .handlePage(res),
       ])
 
          .then(([count, rows]) => {
-            res.json(rows.length ? { page_size: 6, count, rows } : null);
+            res.json(rows.length ? { page_size: +process.env.PAGE_SIZE || 6, count, rows } : null);
          })
          .catch((err) => {
-            res.status(500).json("lối serve");
+            res.status(500).json('lối serve');
             console.log(err);
          });
    }
