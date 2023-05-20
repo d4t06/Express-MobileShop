@@ -15,7 +15,8 @@ const route = function (app) {
 
    // app.use(TokenVerify)
 
-   app.use("/api/admin",TokenVerify, adminRouter)
+   // app.use("/api/admin",TokenVerify, adminRouter)
+   app.use("/api/admin", adminRouter)
 
    app.use("/",(req, res) => {
       res.json("404") //not found

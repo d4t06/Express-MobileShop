@@ -14,26 +14,25 @@ const ProductSchema = new Schema({
   feature: { type: String },
   old_price: { type: Number },
   cur_price: { type: Number },
-  product_label: { type: String },
-  intallment: { type: Boolean },
-  label: { type: String },
-  gift: { type: String },
-  pre_order: { type: String },
+  product_label: { type: String, default: null },
+  intallment: { type: Boolean, default: false },
+  label: { type: String, default: null },
+  gift: { type: String, default: null },
+  pre_order: { type: Boolean, default: false },
 },
   {
-    _id: false,
     timestamps: true,
   }
 );
 
-ProductSchema.set('toObject', { virtuals: true });
-ProductSchema.set('toJSON', { virtuals: true });
+// ProductSchema.set('toObject', { virtuals: true });
+// ProductSchema.set('toJSON', { virtuals: true });
 
-ProductSchema.virtual('data', {
-  ref: "Detail",
-  localField: 'href', // The field in productSchema
-  foreignField: 'key', // The field on detailSchema. This can be whatever you want.
-})
+// ProductSchema.virtual('data', {
+//   ref: "Detail",
+//   localField: 'href', // The field in productSchema
+//   foreignField: 'key', // The field on detailSchema. This can be whatever you want.
+// })
 
 //custom query helper
 // không được viết trùng tên với tên phương thức của query 
@@ -68,6 +67,6 @@ ProductSchema.query.handlePage = function (res) {
 }
 
 // add plugin
-ProductSchema.plugin(AutoIncrement)
+// ProductSchema.plugin(AutoIncrement, {inc_field: 'id'});
 
 module.exports = mongoose.model('Product', ProductSchema)

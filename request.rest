@@ -31,9 +31,30 @@ GET http://localhost:3000/api/products/dtdd/iphone-14-pro-max
 
 
 ###
-GET https://maps.googleapis.com/maps/api/place/autocomplete/json
-  ?input=amoeba
-  &location=37.76999%2C-122.44696
-  &radius=500
-  &types=establishment
-  &key=AIzaSyBdJjiNO2lRXAWQOyLRu1LP9CwWJZ1GCjQ
+POST http://localhost:3000/api/admin/products
+content-type: application/json
+
+{
+  "href": "iphone-11-pro-max-n123ew-new",
+  "brand": "iphone",
+  "name": "iPhone 14 Pro Max-New",
+  "category": "dtdd",
+  "image": "https://cdn.tgdd.vn/Products/Images/42/251192/iphone-14-pro-max-vang-thumb-600x600.jpg",
+  "feature": "6.7\"*and*Super Retina XDR*and*",
+  "old_price": 34490000,
+  "cur_price": 29490000,
+  "product_label": null,
+  "intallment": null,
+  "label": "GIẢM THÊM 1 TRIỆU",
+  "gift": null,
+  "pre_order": false
+}
+
+###
+POST http://localhost:3000/api/admin/products
+content-type: application/json
+
+{
+  "_id": 1,
+  "name": "iPhone 14 Pro Max-New"
+}

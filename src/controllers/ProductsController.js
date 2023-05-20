@@ -1,5 +1,5 @@
 const Product = require('../models/Product');
-const Detail = require('../models/Detail');
+const Item  = require("../models/Item")
 
 class ProductsController {
    getProducts(req, res) {
@@ -70,6 +70,24 @@ class ProductsController {
             res.status(500).json('lối serve');
             console.log(err);
          });
+   }
+
+   // admin
+   addProduct(req, res) {      
+      try {
+         const productInfo = req.body
+         // console.log("product info = ", productInfo)
+         // const newProduct = new Product(productInfo);
+
+         // newProduct.save();
+         const newItem = new Item({name: "test"})
+
+         newItem.save();
+
+         res.status(201).json("successful")
+      } catch (error) {
+         res.json("loi server")
+      }
    }
 }
 
