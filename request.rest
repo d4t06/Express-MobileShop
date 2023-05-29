@@ -47,8 +47,12 @@ content-type: application/json
   "intallment": null,
   "label": "GIẢM THÊM 1 TRIỆU",
   "gift": null,
-  "pre_order": false
+  "pre_order": false,
+  "quantity": 10
 }
+
+###
+GET http://localhost:3000/api/admin/products
 
 ###
 POST http://localhost:3000/api/admin/products

@@ -23,3 +23,8 @@ Delete -> DELETE
 
 ### update thứ 4 19/4/2023
 - Trả về thêm page_size
+
+### update thứ 7 27/5/2023
+- Thêm admin controller
+- Chức năng upload ảnh dùng multer
+- Thêm image model

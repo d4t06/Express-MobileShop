@@ -10,6 +10,9 @@ require('dotenv').config()
 // connect database
 require("./src/config/ConnectDB");
 
+// static files
+app.use("/uploads" ,express.static("uploads"))
+
 // use cookies parser
 app.use(cookieParser());
 

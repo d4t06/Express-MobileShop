@@ -14,6 +14,6 @@ router.get("/suggest", productsController.getSuggest)
 
 router.get("/:category", productsController.getProducts)
 
-router.get("/:category/:key", productsController.getOne)
+router.get("/:category/:key", productsController.getDetail)
 
 module.exports = router;

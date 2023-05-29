@@ -1,7 +1,7 @@
 const mongoose = require("mongoose")
-const AutoIncrement = require('mongoose-sequence')(mongoose);
+// const AutoIncrement = require('mongoose-sequence')(mongoose);
 
-mongoose.set('strictQuery', true);
+// mongoose.set('strictQuery', true);
 
 const Schema = mongoose.Schema;
 
@@ -10,29 +10,30 @@ const ProductSchema = new Schema({
   name: { type: String },
   brand: { type: String },
   category: { type: String },
-  image: { type: String },
+  image_path: { type: String },
   feature: { type: String },
-  old_price: { type: Number },
-  cur_price: { type: Number },
+  old_price: { type: Number, default: null },
+  cur_price: { type: Number, default: null },
   product_label: { type: String, default: null },
   intallment: { type: Boolean, default: false },
   label: { type: String, default: null },
   gift: { type: String, default: null },
   pre_order: { type: Boolean, default: false },
+  quantity:{type: Number, default: null}
 },
   {
     timestamps: true,
   }
 );
 
-// ProductSchema.set('toObject', { virtuals: true });
-// ProductSchema.set('toJSON', { virtuals: true });
+ProductSchema.set('toObject', { virtuals: true });
+ProductSchema.set('toJSON', { virtuals: true });
 
-// ProductSchema.virtual('data', {
-//   ref: "Detail",
-//   localField: 'href', // The field in productSchema
-//   foreignField: 'key', // The field on detailSchema. This can be whatever you want.
-// })
+ProductSchema.virtual('data', {
+  ref: "Detail",
+  localField: 'href', // The field in productSchema
+  foreignField: 'key', // The field on detailSchema. This can be whatever you want.
+})
 
 //custom query helper
 // không được viết trùng tên với tên phương thức của query 

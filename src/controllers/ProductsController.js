@@ -1,5 +1,4 @@
 const Product = require('../models/Product');
-const Item  = require("../models/Item")
 
 class ProductsController {
    getProducts(req, res) {
@@ -7,6 +6,10 @@ class ProductsController {
       const { price, ...query } = req.query;
 
       console.log(category);
+
+      // chec payload
+      if (!category) 
+        return res.status(402).json({status: "finish", message: "missing payload"})
 
       // console.log(res.locals.sort)
 
@@ -37,7 +40,8 @@ class ProductsController {
          })
          .catch((err) => res.status(500).json(err));
    }
-   async getOne(req, res) {
+
+   async getDetail(req, res) {
       const { key } = req.params;
       const product = await Product.find({ href: key }).populate('data');
 
@@ -70,25 +74,7 @@ class ProductsController {
             res.status(500).json('lối serve');
             console.log(err);
          });
-   }
-
-   // admin
-   addProduct(req, res) {      
-      try {
-         const productInfo = req.body
-         // console.log("product info = ", productInfo)
-         // const newProduct = new Product(productInfo);
-
-         // newProduct.save();
-         const newItem = new Item({name: "test"})
-
-         newItem.save();
-
-         res.status(201).json("successful")
-      } catch (error) {
-         res.json("loi server")
-      }
-   }
+   }   
 }
 
 module.exports = new ProductsController();
