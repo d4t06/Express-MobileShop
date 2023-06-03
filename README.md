@@ -28,3 +28,7 @@ Delete -> DELETE
 - Thêm admin controller
 - Chức năng upload ảnh dùng multer
 - Thêm image model
+
+### update thứ 7 3/6/2023
+- Thêm image Controller
+- upload và delete ảnh

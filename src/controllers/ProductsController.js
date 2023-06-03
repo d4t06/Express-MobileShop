@@ -43,7 +43,8 @@ class ProductsController {
 
    async getDetail(req, res) {
       const { key } = req.params;
-      const product = await Product.find({ href: key }).populate('data');
+      // const product = await Product.find({ href: key }).populate('data');
+      const product = await Product.find({ href: key });
 
       res.json(product);
    }
