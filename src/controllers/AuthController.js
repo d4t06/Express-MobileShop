@@ -52,34 +52,34 @@ class AuthController {
          );
          if (!isCorrectPassWord) return res.sendStatus(401);
 
-         res.json({user_name: founderUsername});
+         // res.json({user_name: founderUsername});
 
-         // //generate token
-         // const token = jwt.sign(
-         //    { "username": founderUsername, "role_code": founderRole_code },
-         //    'nguyenhuudat',
-         //    { expiresIn: '10s' }
-         // );
-         // const refreshToken = jwt.sign(
-         //    { "username": founderUsername, "role_code": founderRole_code },
-         //    'nguyenhuudat',
-         //    { expiresIn: '1d' }
-         // );
+         //generate token
+         const token = jwt.sign(
+            { "username": founderUsername, "role_code": founderRole_code },
+            'nguyenhuudat',
+            { expiresIn: '10s' }
+         );
+         const refreshToken = jwt.sign(
+            { "username": founderUsername, "role_code": founderRole_code },
+            'nguyenhuudat',
+            { expiresIn: '1d' }
+         );
 
-         // //update refresh token to user
-         // await User.updateOne(
-         //    { "username": username },
-         //    { "refresh_token": refreshToken }
-         // );
+         //update refresh token to user
+         await User.updateOne(
+            { "username": username },
+            { "refresh_token": refreshToken }
+         );
 
-         // // response result
-         // res.cookie('jwt', refreshToken, {
-         //    httpOnly: true,
-         //    maxAge: 24 * 60 * 60 * 1000,
-         //    secure: true,
-         //    sameSite: 'none'
-         // });
-         // res.json({ token });
+         // response result
+         res.cookie('jwt', refreshToken, {
+            httpOnly: true,
+            maxAge: 24 * 60 * 60 * 1000,
+            secure: true,
+            sameSite: 'none'
+         });
+         res.json({ token });
       } catch (err) {
          res.status(500).json({ message: err });
       }
