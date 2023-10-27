@@ -1,10 +1,12 @@
+
 const express = require("express");
 const app = express();
 const cors = require("cors");
 const route = require("./src/routes");
+
+require('dotenv').config({ path: `.env.local`, override: true })
 const port = process.env.PORT || 3000;
 const cookieParser = require("cookie-parser");
-require('dotenv').config()
 // const corsOptions = require("./src/config/corsOptions");
 
 // connect database
@@ -17,7 +19,7 @@ app.use("/uploads" ,express.static("uploads"))
 app.use(cookieParser());
 
 // allow cors
-app.use(cors({credentials: true, origin: "http://localhost:3001"}));
+app.use(cors({credentials: true, origin: process.env.WHITE_LIST}));
 
 //built-in middleware for json
 app.use(express.json());
@@ -29,5 +31,5 @@ app.use(express.urlencoded({ extended: false }));
 route(app);
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+  console.log(`Example app listening on port ${port}`, process.env.WHITE_LIST);
 });

@@ -35,7 +35,7 @@ class AuthController {
       const { username, password } = req.body;
 
       // check payload
-      if ((!username, !password)) return res.sendStatus(401); // unauthorized
+      if (!username || !password) return res.sendStatus(401); // unauthorized
 
       try {
          // check username is in db
@@ -45,7 +45,6 @@ class AuthController {
          const { role_code: founderRole_code, username: founderUsername } =
             founderUser;
 
-
          // check password
          const isCorrectPassWord = await bcrypt.compare(
             password,
@@ -53,32 +52,34 @@ class AuthController {
          );
          if (!isCorrectPassWord) return res.sendStatus(401);
 
-         //generate token
-         const token = jwt.sign(
-            { "username": founderUsername, "role_code": founderRole_code },
-            'nguyenhuudat',
-            { expiresIn: '10s' }
-         );
-         const refreshToken = jwt.sign(
-            { "username": founderUsername, "role_code": founderRole_code },
-            'nguyenhuudat',
-            { expiresIn: '1d' }
-         );
+         res.json({user_name: founderUsername});
 
-         //update refresh token to user
-         await User.updateOne(
-            { "username": username },
-            { "refresh_token": refreshToken }
-         );
+         // //generate token
+         // const token = jwt.sign(
+         //    { "username": founderUsername, "role_code": founderRole_code },
+         //    'nguyenhuudat',
+         //    { expiresIn: '10s' }
+         // );
+         // const refreshToken = jwt.sign(
+         //    { "username": founderUsername, "role_code": founderRole_code },
+         //    'nguyenhuudat',
+         //    { expiresIn: '1d' }
+         // );
 
-         // response result
-         res.cookie('jwt', refreshToken, {
-            httpOnly: true,
-            maxAge: 24 * 60 * 60 * 1000,
-            secure: true,
-            sameSite: 'none'
-         });
-         res.json({ token });
+         // //update refresh token to user
+         // await User.updateOne(
+         //    { "username": username },
+         //    { "refresh_token": refreshToken }
+         // );
+
+         // // response result
+         // res.cookie('jwt', refreshToken, {
+         //    httpOnly: true,
+         //    maxAge: 24 * 60 * 60 * 1000,
+         //    secure: true,
+         //    sameSite: 'none'
+         // });
+         // res.json({ token });
       } catch (err) {
          res.status(500).json({ message: err });
       }
